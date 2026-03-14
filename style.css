@@ -1,0 +1,81 @@
+/* Modern Renk Değişkenleri ve Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+:root {
+  --primary-color: #6366f1; /* Şık bir indigo mavisi */
+  --bg-color: #f8fafc;
+  --text-color: #1e293b;
+  --card-bg: #ffffff;
+  --accent-color: #8b5cf6;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+/* Navigasyon / Header */
+header {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px); /* Cam efekti */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 1rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Kart Yapısı (İçerikler için) */
+.container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Buton Tasarımı */
+.btn {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  color: white;
+  padding: 10px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  transition: opacity 0.3s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* Mobil Uyumluluk */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .container {
+    margin: 1rem auto;
+  }
+}
