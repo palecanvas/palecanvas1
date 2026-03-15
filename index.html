@@ -956,6 +956,24 @@ refreshAI(null,true);
 applyLang();
 sb.auth.getSession().then(({data:{session}})=>{
   if(session?.user){S.user=session.user;loadProfile().then(enterApp);}
+  <div class="img-preview" id="imgPrev" onclick="document.getElementById('imgFile').click()">
+        <div class="img-preview-label" id="imgPrevLbl">Tıkla veya görsel seç</div>
+        <img id="previewImg" src="" style="display:none">
+      </div>
+      <input type="file" id="imgFile" accept="image/*" style="display:none" onchange="previewImage(this)">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeShare()">İptal</button>
+      <button class="modal-submit" id="submitPost" onclick="createPost()">Paylaş</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">İşlem başarılı.</div>
+
+<script src="script.js"></script> 
+</body>
+</html>
 });
 </script>
 </body>
