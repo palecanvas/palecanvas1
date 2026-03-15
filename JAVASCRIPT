@@ -1,0 +1,82 @@
+// Sayfa Yönetimi (Geçişler)
+function showPage(pageId) {
+    // Tüm sayfaları gizle
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    // Tüm navigasyon ikonlarını pasif yap
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    
+    // İlgili sayfayı göster
+    const targetPage = document.getElementById(pageId + 'Page');
+    if (targetPage) targetPage.classList.add('active');
+    
+    // İlgili menü öğesini aktif yap
+    const navItem = document.getElementById('nav-' + pageId);
+    if (navItem) navItem.classList.add('active');
+    
+    // Ana ekranın animasyonla gelmesini sağla
+    document.querySelector('.main').style.opacity = "1";
+}
+
+// Paylaşım Modalı Kontrolleri
+function openShare() {
+    document.getElementById('shareModal').classList.add('open');
+}
+
+function closeShare() {
+    document.getElementById('shareModal').classList.remove('open');
+    resetShareForm();
+}
+
+// Resim Önizleme Fonksiyonu
+function previewImage(input) {
+    const file = input.files[0];
+    const preview = document.getElementById('previewImg');
+    const label = document.getElementById('imgPrevLbl');
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            label.style.display = 'none';
+        }
+        reader.readAsDataURL(file);
+    }
+}
+
+// Formu Sıfırlama
+function resetShareForm() {
+    document.getElementById('postTitle').value = "";
+    document.getElementById('postDesc').value = "";
+    document.getElementById('postTags').value = "";
+    document.getElementById('previewImg').style.display = 'none';
+    document.getElementById('previewImg').src = "";
+    document.getElementById('imgPrevLbl').style.display = 'block';
+}
+
+// Paylaş Butonu (Simülasyon)
+function createPost() {
+    const title = document.getElementById('postTitle').value;
+    if (!title) {
+        showToast("Lütfen bir başlık girin!");
+        return;
+    }
+    
+    showToast("Eseriniz başarıyla paylaşıldı!");
+    closeShare();
+}
+
+// Bildirim (Toast) Gösterme
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.innerText = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// Sayfa yüklendiğinde çalışacaklar
+window.onload = () => {
+    // Giriş ekranını geçmek için geçici (Geliştirme aşaması için)
+    // Gerçek bir sistemde burada Auth kontrolü yapılır
+    document.querySelector('.main').style.opacity = "1";
+};
