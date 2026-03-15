@@ -3,36 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PaleCanvas - Paylaşım Platformu</title>
+    <title>PaleCanvas</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Hızlı önizleme için temel düzen */
+        /* Sayfa ve Modal Ayarları */
         .page { display: none; }
         .page.active { display: block; }
-        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center; }
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:1000; align-items:center; justify-content:center; }
         .modal.open { display: flex; }
-        .modal-content { background: white; padding: 20px; border-radius: 15px; width: 90%; max-width: 400px; color: black; }
-        .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 20px; border-radius: 20px; display: none; z-index: 2000; }
+        .modal-content { background: #1a1a1a; color: white; padding: 25px; border-radius: 15px; width: 90%; max-width: 450px; border: 1px solid #333; }
+        .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 20px; border-radius: 20px; display: none; z-index: 2000; font-size: 14px; }
         .toast.show { display: block; }
-        input, textarea, select { width: 100%; margin: 10px 0; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
+        
+        /* Form Elemanları */
+        input, textarea, select { width: 100%; margin: 10px 0; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #0c0c0c; color: white; outline: none; }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px; }
+        .btn-post { background: #c9b99a; color: black; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .btn-cancel { background: transparent; color: #777; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
 
     <div id="app">
-        <nav class="bottom-nav" style="position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; background: #fff; padding: 10px; border-top: 1px solid #ddd;">
-            <div onclick="showPage('feed')">🏠</div>
-            <div onclick="showPage('explore')">🔍</div>
-            <div onclick="openShare()" style="background: #007bff; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer;">+</div>
-            <div onclick="showPage('profile')">👤</div>
-            <div onclick="showPage('settings')">⚙️</div>
+        <nav class="bottom-nav" style="position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around; background: #161618; padding: 15px; border-top: 1px solid #2a2a2e; z-index: 100;">
+            <div onclick="showPage('feed')" style="cursor:pointer">🏠</div>
+            <div onclick="showPage('explore')" style="cursor:pointer">🔍</div>
+            <div onclick="openShare()" style="background: #c9b99a; color: black; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold; margin-top: -25px; border: 4px solid #0e0e0f;">+</div>
+            <div onclick="showPage('profile')" style="cursor:pointer">👤</div>
+            <div onclick="showPage('settings')" style="cursor:pointer">⚙️</div>
         </nav>
 
-        <main style="padding-bottom: 70px;">
+        <main style="padding-bottom: 80px;">
             <section id="feedPage" class="page active">
-                <header style="padding: 20px; text-align: center;"><h2>PaleCanvas</h2></header>
-                <div id="feedContainer" style="padding: 10px;">
-                    <p style="text-align: center; color: #666;">Henüz bir paylaşım yok. İlk adımı sen at!</p>
+                <header style="padding: 30px 20px; text-align: center;">
+                    <h1 style="color: #c9b99a; font-family: serif; letter-spacing: 2px;">PaleCanvas</h1>
+                </header>
+                <div id="feedContainer" style="padding: 15px;">
+                    <p style="text-align: center; color: #7a7870;">Paylaşımlar yükleniyor...</p>
                 </div>
             </section>
 
@@ -43,30 +50,30 @@
 
         <div id="shareModal" class="modal">
             <div class="modal-content">
-                <h3 style="margin-top: 0;">Yeni Paylaşım</h3>
-                <input type="text" id="postTitle" placeholder="Başlık...">
-                <textarea id="postDesc" placeholder="Açıklama..." rows="3"></textarea>
+                <h3 style="margin-bottom: 15px; color: #c9b99a;">Yeni Paylaşım Oluştur</h3>
+                <input type="text" id="postTitle" placeholder="Başlık (Örn: Yeni Çizimim)">
+                <textarea id="postDesc" placeholder="Neler düşünüyorsun?" rows="4"></textarea>
                 <select id="postType">
-                    <option value="genel">Genel</option>
-                    <option value="yazilim">Yazılım</option>
-                    <option value="sanat">Sanat</option>
+                    <option value="general">Genel</option>
+                    <option value="art">Sanat</option>
+                    <option value="code">Yazılım</option>
                 </select>
-                <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                    <button onclick="closeShare()" style="background: #eee; border: none; padding: 10px; border-radius: 5px;">İptal</button>
-                    <button onclick="createPost()" style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Paylaş</button>
+                <div class="modal-actions">
+                    <button class="btn-cancel" onclick="closeShare()">İptal</button>
+                    <button class="btn-post" onclick="createPost()">Paylaş</button>
                 </div>
             </div>
         </div>
 
-        <div class="toast" id="toast">İşlem başarılı!</div>
+        <div class="toast" id="toast">İşlem başarılı.</div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
-        function showPage(pageId) {
+        function showPage(id) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            const target = document.getElementById(pageId + 'Page');
+            const target = document.getElementById(id + 'Page');
             if(target) target.classList.add('active');
         }
 
@@ -80,8 +87,8 @@
             setTimeout(() => t.classList.remove('show'), 3000);
         }
     </script>
-
-    <script src="script.js"></script>
+    
+    <script src="JAVASCRIPT/script.js"></script>
 
 </body>
 </html>
