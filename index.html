@@ -978,3 +978,19 @@ sb.auth.getSession().then(({data:{session}})=>{
 </script>
 </body>
 </html>
+<img id="previewImg" src="" style="display:none">
+      </div>
+      <input type="file" id="imgFile" accept="image/*" style="display:none" onchange="previewImage(this)">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeShare()">İptal</button>
+      <button class="modal-submit" id="submitPost" onclick="createPost()">Paylaş</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">İşlem başarılı.</div>
+
+<script src="script.js"></script> 
+</body>
+</html>
